@@ -1,0 +1,23 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Osoobe\DimePay\Data\Cards;
+
+use Spatie\LaravelData\Data;
+
+final class CardData extends Data
+{
+    public function __construct(
+        public string $token,
+        public string $cardRequestToken,
+        public string $referenceId,
+        public string $status,
+        public bool $expired,
+        public ?string $currency = null,
+        public ?string $cardExpiry = null,
+        public ?string $cardScheme = null,
+        public ?string $lastFourDigits = null,
+        public int $verificationAttempts = 0,
+    ) {}
+}

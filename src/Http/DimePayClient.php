@@ -13,42 +13,75 @@ use Osoobe\DimePay\Exceptions\DimePayException;
 use Osoobe\DimePay\Exceptions\DimePayNotFoundException;
 use Osoobe\DimePay\Exceptions\DimePayServerException;
 use Osoobe\DimePay\Exceptions\DimePayValidationException;
+use Osoobe\DimePay\Support\JwtSigner;
 
 class DimePayClient
 {
     private array $config;
+    private JwtSigner $signer;
 
     public function __construct(array $config = [])
     {
         $this->config = $config ?: config('dimepay');
+        $this->signer = new JwtSigner($this->config);
     }
 
-    public function get(string $endpoint): array
+    /**
+     * GET request — token path param is JWT-signed automatically.
+     */
+    public function get(string $endpoint, ?string $token = null): array
     {
-        $response = $this->makeRequest()->get($this->url($endpoint));
+        $url = $token
+            ? $this->url($endpoint . '/' . $this->signer->sign(['token' => $token]))
+            : $this->url($endpoint);
+
+        $response = $this->makeRequest()->get($url);
 
         return $this->handle($response);
     }
 
-    public function post(string $endpoint, array $payload = []): array
+    /**
+     * POST request — payload is JWT-signed and wrapped as { lang, data }.
+     */
+    public function post(string $endpoint, array $payload = [], string $lang = 'en'): array
     {
-        $response = $this->makeRequest()->post($this->url($endpoint), $payload);
+        $response = $this->makeRequest()->post(
+            $this->url($endpoint),
+            $this->wrap($payload, $lang),
+        );
 
         return $this->handle($response);
     }
 
-    public function put(string $endpoint, array $payload = []): array
+    /**
+     * PUT request — payload is JWT-signed and wrapped as { lang, data }.
+     */
+    public function put(string $endpoint, array $payload = [], string $lang = 'en'): array
     {
-        $response = $this->makeRequest()->put($this->url($endpoint), $payload);
+        $response = $this->makeRequest()->put(
+            $this->url($endpoint),
+            $this->wrap($payload, $lang),
+        );
 
         return $this->handle($response);
+    }
+
+    /**
+     * Wrap a payload as { lang, data: <signedJWT> }.
+     */
+    private function wrap(array $payload, string $lang): array
+    {
+        return [
+            'lang' => $lang,
+            'data' => $this->signer->sign($payload),
+        ];
     }
 
     private function makeRequest(): PendingRequest
     {
-        $request = Http::withHeaders([
-            'client_key' => $this->config['client_key'],
-            'Accept'     => 'application/json',
+        return Http::withHeaders([
+            'client_key'   => $this->config['client_key'],
+            'Accept'       => 'application/json',
             'Content-Type' => 'application/json',
         ])
         ->timeout($this->config['timeout'] ?? 30)
@@ -57,13 +90,11 @@ class DimePayClient
             $this->config['retry_delay'] ?? 500,
             fn (\Exception $e) => $e instanceof DimePayServerException,
         );
-
-        return $request;
     }
 
     private function url(string $endpoint): string
     {
-        $env = $this->config['environment'] ?? 'sandbox';
+        $env  = $this->config['environment'] ?? 'sandbox';
         $base = $this->config['base_urls'][$env] ?? $this->config['base_urls']['sandbox'];
 
         return rtrim($base, '/') . '/' . ltrim($endpoint, '/');
@@ -82,9 +113,9 @@ class DimePayClient
 
     private function throwException(Response $response): never
     {
-        $body = $response->json() ?? [];
-        $status = $response->status();
-        $code = $body['code'] ?? 'unknown_error';
+        $body    = $response->json() ?? [];
+        $status  = $response->status();
+        $code    = $body['code'] ?? 'unknown_error';
         $message = $body['message'] ?? 'An unknown error occurred.';
         $details = $body['details'] ?? [];
 
@@ -104,18 +135,22 @@ class DimePayClient
         }
 
         $channel = $this->config['logging']['channel'] ?? 'stack';
-        $level = $this->config['logging']['level'] ?? 'debug';
+        $level   = $this->config['logging']['level'] ?? 'debug';
 
         Log::channel($channel)->$level('DimePay API Response', [
-            'status'  => $response->status(),
-            'body'    => $response->json(),
+            'status' => $response->status(),
+            'body'   => $response->json(),
         ]);
     }
 
+    /**
+     * Return a cloned instance with overridden config — for multi-tenant use.
+     */
     public function withConfig(array $config): static
     {
-        $clone = clone $this;
+        $clone         = clone $this;
         $clone->config = array_merge($this->config, $config);
+        $clone->signer = new JwtSigner($clone->config);
 
         return $clone;
     }

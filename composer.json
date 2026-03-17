@@ -1,57 +1,58 @@
 {
-    "name": "osoobe/dimepay-laravel-sdk",
-    "description": "Laravel SDK for DimePay payment gateway — orders, payments, cards, split, recurring, and more.",
-    "type": "library",
-    "license": "MIT",
-    "keywords": ["laravel", "dimepay", "payment", "gateway", "sdk"],
-    "authors": [
-        {
-            "name": "Osoobe",
-            "email": "dev@osoobe.com"
-        }
-    ],
-    "require": {
-        "php": "^8.2",
-        "illuminate/support": "^10.0|^11.0|^12.0",
-        "illuminate/http": "^10.0|^11.0|^12.0",
-        "illuminate/contracts": "^10.0|^11.0|^12.0",
-        "firebase/php-jwt": "^6.0"
-    },
-    "require-dev": {
-        "orchestra/testbench": "^9.0|^10.0",
-        "pestphp/pest": "^3.0",
-        "pestphp/pest-plugin-laravel": "^3.0",
-        "spatie/laravel-package-tools": "^1.16",
-        "laravel/pint": "^1.0",
-        "larastan/larastan": "^2.0",
-        "nunomaduro/collision": "^8.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Osoobe\\DimePay\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Osoobe\\DimePay\\Tests\\": "tests/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Osoobe\\DimePay\\DimePayServiceProvider"
-            ],
-            "aliases": {
-                "DimePay": "Osoobe\\DimePay\\Facades\\DimePay"
-            }
-        }
-    },
-    "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+  "name": "osoobe/dimepay-laravel-sdk",
+  "description": "Laravel SDK for DimePay payment gateway — orders, payments, cards, split, recurring, and more.",
+  "type": "library",
+  "license": "MIT",
+  "keywords": ["laravel", "dimepay", "payment", "gateway", "sdk"],
+  "authors": [
+      {
+          "name": "Osoobe",
+          "email": "dev@osoobe.com"
+      }
+  ],
+  "require": {
+      "php": "^8.2",
+      "illuminate/support": "^10.0|^11.0|^12.0",
+      "illuminate/http": "^10.0|^11.0|^12.0",
+      "illuminate/contracts": "^10.0|^11.0|^12.0",
+      "firebase/php-jwt": "^6.0",
+      "spatie/laravel-data": "^4.0"
+  },
+  "require-dev": {
+      "orchestra/testbench": "^9.0|^10.0",
+      "pestphp/pest": "^3.0",
+      "pestphp/pest-plugin-laravel": "^3.0",
+      "spatie/laravel-package-tools": "^1.16",
+      "laravel/pint": "^1.0",
+      "larastan/larastan": "^2.0",
+      "nunomaduro/collision": "^8.0"
+  },
+  "autoload": {
+      "psr-4": {
+          "Osoobe\\DimePay\\": "src/"
+      }
+  },
+  "autoload-dev": {
+      "psr-4": {
+          "Osoobe\\DimePay\\Tests\\": "tests/"
+      }
+  },
+  "extra": {
+      "laravel": {
+          "providers": [
+              "Osoobe\\DimePay\\DimePayServiceProvider"
+          ],
+          "aliases": {
+              "DimePay": "Osoobe\\DimePay\\Facades\\DimePay"
+          }
+      }
+  },
+  "config": {
+      "sort-packages": true,
+      "allow-plugins": {
+          "pestphp/pest-plugin": true
+      }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
