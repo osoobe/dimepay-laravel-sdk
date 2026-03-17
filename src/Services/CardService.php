@@ -9,6 +9,7 @@ use Osoobe\DimePay\Contracts\DimePayClientInterface;
 use Osoobe\DimePay\Data\Cards\CardData;
 use Osoobe\DimePay\Data\Cards\CardRequestData;
 use Osoobe\DimePay\Data\Cards\CardRequestResponseData;
+use Osoobe\DimePay\Events\CardTokenRequested;
 
 class CardService implements CardServiceInterface
 {
@@ -19,8 +20,11 @@ class CardService implements CardServiceInterface
     public function requestToken(CardRequestData $data): CardRequestResponseData
     {
         $response = $this->client->post('/card-request', $data->toArray());
+        $result   = CardRequestResponseData::from($response);
 
-        return CardRequestResponseData::from($response);
+        event(new CardTokenRequested($data, $result));
+
+        return $result;
     }
 
     public function find(string $cardRequestToken): CardData

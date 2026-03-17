@@ -8,6 +8,7 @@ use Osoobe\DimePay\Contracts\DimePayClientInterface;
 use Osoobe\DimePay\Contracts\OrderServiceInterface;
 use Osoobe\DimePay\Data\Orders\CreateOrderData;
 use Osoobe\DimePay\Data\Orders\OrderResponseData;
+use Osoobe\DimePay\Events\OrderCreated;
 
 class OrderService implements OrderServiceInterface
 {
@@ -18,8 +19,11 @@ class OrderService implements OrderServiceInterface
     public function create(CreateOrderData $data): OrderResponseData
     {
         $response = $this->client->post('/orders', $data->toArray());
+        $result   = OrderResponseData::from($response);
 
-        return OrderResponseData::from($response);
+        event(new OrderCreated($data, $result));
+
+        return $result;
     }
 
     public function find(string $token): OrderResponseData
