@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Osoobe\DimePay;
 
+use Illuminate\Foundation\Console\AboutCommand;
+use Osoobe\DimePay\Commands\InstallCommand;
 use Osoobe\DimePay\Contracts\CardServiceInterface;
 use Osoobe\DimePay\Contracts\DimePayClientInterface;
 use Osoobe\DimePay\Contracts\OrderServiceInterface;
@@ -24,7 +26,8 @@ class DimePayServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('dimepay')
-            ->hasConfigFile();
+            ->hasConfigFile()
+            ->hasCommand(InstallCommand::class);
     }
 
     public function packageRegistered(): void
@@ -50,11 +53,24 @@ class DimePayServiceProvider extends PackageServiceProvider
         });
 
         $this->app->singletonIf(TransactionServiceInterface::class, function () {
-            return new TransactionService;
+            return new TransactionService();
         });
 
         $this->app->singleton(DimePayManager::class, function ($app) {
             return new DimePayManager($app);
         });
+    }
+
+    public function packageBooted(): void
+    {
+        if (config('dimepay.routes.enabled', true)) {
+            $this->loadRoutesFrom(__DIR__ . '/../routes/dimepay.php');
+        }
+
+        AboutCommand::add('DimePay SDK', fn () => [
+            'Version'     => '1.0.0',
+            'Environment' => config('dimepay.environment', 'sandbox'),
+            'Logging'     => config('dimepay.logging.enabled') ? 'enabled' : 'disabled',
+        ]);
     }
 }
