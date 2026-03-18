@@ -14,13 +14,13 @@ final class OrderItemData extends Data
     public function __construct(
         public string $id,
         public string $name,
-        public int $price,
+        public float $price,
         public int $quantity,
         public string $sku,
-        public ?string $shortDescription = null,
-        public ?string $imageUrl = null,
+        public string $shortDescription = '',
+        public string $imageUrl = 'https://example.com/image.jpg',
         public ?string $merchantId = null,
         #[DataCollectionOf(SelectedOptionData::class)]
-        public ?DataCollection $selectedOptions = null,
+        public DataCollection|array|null $selectedOptions = null,
     ) {}
 }

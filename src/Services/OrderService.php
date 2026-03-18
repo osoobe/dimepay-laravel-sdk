@@ -7,6 +7,7 @@ namespace Osoobe\DimePay\Services;
 use Osoobe\DimePay\Contracts\DimePayClientInterface;
 use Osoobe\DimePay\Contracts\OrderServiceInterface;
 use Osoobe\DimePay\Data\Orders\CreateOrderData;
+use Osoobe\DimePay\Data\Orders\CreateOrderResponseData;
 use Osoobe\DimePay\Data\Orders\OrderResponseData;
 use Osoobe\DimePay\Events\OrderCreated;
 
@@ -16,10 +17,10 @@ class OrderService implements OrderServiceInterface
         private readonly DimePayClientInterface $client,
     ) {}
 
-    public function create(CreateOrderData $data): OrderResponseData
+    public function create(CreateOrderData $data): CreateOrderResponseData
     {
         $response = $this->client->post('/orders', $data->toArray());
-        $result = OrderResponseData::from($response);
+        $result   = CreateOrderResponseData::from($response);
 
         event(new OrderCreated($data, $result));
 

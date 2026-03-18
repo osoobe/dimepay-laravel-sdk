@@ -6,7 +6,7 @@ namespace Osoobe\DimePay\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Osoobe\DimePay\Data\Orders\CreateOrderData;
-use Osoobe\DimePay\Data\Orders\OrderResponseData;
+use Osoobe\DimePay\Data\Orders\CreateOrderResponseData;
 
 class OrderCreated
 {
@@ -14,6 +14,6 @@ class OrderCreated
 
     public function __construct(
         public readonly CreateOrderData $request,
-        public readonly OrderResponseData $response,
+        public readonly CreateOrderResponseData $response,
     ) {}
 }

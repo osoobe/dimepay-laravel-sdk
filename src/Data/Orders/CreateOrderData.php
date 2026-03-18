@@ -18,6 +18,8 @@ final class CreateOrderData extends Data
         public float $subtotal,
         public string $currency,
         public string $email,
+        public string $ipAddress,
+        public string $referenceTransactionId,
         public ?string $webhookUrl = null,
         public ?string $redirectUrl = null,
         public ?string $checkoutUrl = null,
@@ -26,18 +28,18 @@ final class CreateOrderData extends Data
         public bool $fulfilled = false,
         public bool $tokenize = false,
         public bool $isSubscription = false,
-        public ?string $ipAddress = null,
-        public ?string $orderComments = null,
-        public ?string $referenceTransactionId = null,
-        public array $fees = [],
+        public string $orderComments = '',
+        /** @var OrderItemData[]|DataCollection|null */
         #[DataCollectionOf(OrderItemData::class)]
-        public ?DataCollection $items = null,
+        public DataCollection|array|null $items = null,
+        /** @var TaxData[]|DataCollection|null */
         #[DataCollectionOf(TaxData::class)]
-        public ?DataCollection $taxes = null,
+        public DataCollection|array|null $taxes = null,
         public ?PersonData $shippingPerson = null,
         public ?PersonData $billingPerson = null,
+        /** @var SplitData[]|DataCollection|null */
         #[DataCollectionOf(SplitData::class)]
-        public ?DataCollection $split = null,
+        public DataCollection|array|null $split = null,
         public ?SubscriptionInstructionsData $subscriptionInstructions = null,
     ) {}
 }
