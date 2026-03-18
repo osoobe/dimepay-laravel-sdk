@@ -11,20 +11,18 @@ use Osoobe\DimePay\Exceptions\DimePayException;
 class JwtSigner
 {
     private string $secretKey;
-
     private string $algorithm;
-
     private int $ttl;
 
     public function __construct(array $config = [])
     {
         $this->secretKey = $config['secret_key'] ?? '';
         $this->algorithm = $config['jwt']['algorithm'] ?? 'HS256';
-        $this->ttl = $config['jwt']['ttl'] ?? 3600;
+        $this->ttl       = $config['jwt']['ttl'] ?? 3600;
     }
 
     /**
-     * Sign a payload and return a JWT string.
+     * Sign an array payload and return a JWT string.
      */
     public function sign(array $payload): string
     {
@@ -43,7 +41,16 @@ class JwtSigner
     }
 
     /**
-     * Decode and verify a JWT string. Useful for testing / webhook verification.
+     * Sign a token string for GET /orders/{token}.
+     * Docs: jwt.sign({ token: 'order_xxx' }, secret)
+     */
+    public function signString(string $value): string
+    {
+        return $this->sign(['token' => $value]);
+    }
+
+    /**
+     * Decode and verify a JWT string.
      */
     public function decode(string $token): array
     {

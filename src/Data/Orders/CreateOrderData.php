@@ -32,7 +32,7 @@ final class CreateOrderData extends Data
         public array $taxes = [],
         public ?PersonData $shippingPerson = null,
         public ?PersonData $billingPerson = null,
-        public array $split = [],
+        public ?array $split = null,
         #[MapOutputName('subscription_instructions')]
         public ?SubscriptionInstructionsData $subscriptionInstructions = null,
     ) {}

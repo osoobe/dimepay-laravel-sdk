@@ -31,7 +31,7 @@ class DimePayClient implements DimePayClientInterface
     public function get(string $endpoint, ?string $token = null): array
     {
         $url = $token
-            ? $this->url($endpoint . '/' . $this->signer->sign(['token' => $token]))
+            ? $this->url($endpoint . '/' . $this->signer->signString($token))
             : $this->url($endpoint);
 
         $response = $this->makeRequest()->get($url);
