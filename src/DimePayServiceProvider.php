@@ -52,5 +52,9 @@ class DimePayServiceProvider extends PackageServiceProvider
         $this->app->singletonIf(TransactionServiceInterface::class, function () {
             return new TransactionService();
         });
+
+        $this->app->singleton(DimePayManager::class, function ($app) {
+            return new DimePayManager($app);
+        });
     }
 }

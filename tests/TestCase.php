@@ -19,6 +19,13 @@ abstract class TestCase extends OrchestraTestCase
         ];
     }
 
+    protected function getPackageAliases($app): array
+    {
+        return [
+            'DimePay' => \Osoobe\DimePay\Facades\DimePay::class,
+        ];
+    }
+
     protected function defineEnvironment($app): void
     {
         $app['config']->set('dimepay', sandboxConfig());

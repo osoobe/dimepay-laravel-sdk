@@ -8,6 +8,7 @@ use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Osoobe\DimePay\Contracts\DimePayClientInterface;
 use Osoobe\DimePay\Exceptions\DimePayAuthException;
 use Osoobe\DimePay\Exceptions\DimePayException;
 use Osoobe\DimePay\Exceptions\DimePayNotFoundException;
@@ -15,7 +16,7 @@ use Osoobe\DimePay\Exceptions\DimePayServerException;
 use Osoobe\DimePay\Exceptions\DimePayValidationException;
 use Osoobe\DimePay\Support\JwtSigner;
 
-class DimePayClient
+class DimePayClient implements DimePayClientInterface
 {
     private array $config;
     private JwtSigner $signer;
@@ -26,9 +27,6 @@ class DimePayClient
         $this->signer = new JwtSigner($this->config);
     }
 
-    /**
-     * GET request — token path param is JWT-signed automatically.
-     */
     public function get(string $endpoint, ?string $token = null): array
     {
         $url = $token
@@ -40,9 +38,6 @@ class DimePayClient
         return $this->handle($response);
     }
 
-    /**
-     * POST request — payload is JWT-signed and wrapped as { lang, data }.
-     */
     public function post(string $endpoint, array $payload = [], string $lang = 'en'): array
     {
         $response = $this->makeRequest()->post(
@@ -53,9 +48,6 @@ class DimePayClient
         return $this->handle($response);
     }
 
-    /**
-     * PUT request — payload is JWT-signed and wrapped as { lang, data }.
-     */
     public function put(string $endpoint, array $payload = [], string $lang = 'en'): array
     {
         $response = $this->makeRequest()->put(
@@ -66,9 +58,6 @@ class DimePayClient
         return $this->handle($response);
     }
 
-    /**
-     * Wrap a payload as { lang, data: <signedJWT> }.
-     */
     private function wrap(array $payload, string $lang): array
     {
         return [
@@ -143,9 +132,6 @@ class DimePayClient
         ]);
     }
 
-    /**
-     * Return a cloned instance with overridden config — for multi-tenant use.
-     */
     public function withConfig(array $config): static
     {
         $clone         = clone $this;
