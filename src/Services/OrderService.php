@@ -19,7 +19,7 @@ class OrderService implements OrderServiceInterface
     public function create(CreateOrderData $data): OrderResponseData
     {
         $response = $this->client->post('/orders', $data->toArray());
-        $result   = OrderResponseData::from($response);
+        $result = OrderResponseData::from($response);
 
         event(new OrderCreated($data, $result));
 

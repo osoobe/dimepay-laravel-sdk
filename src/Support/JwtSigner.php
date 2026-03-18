@@ -11,14 +11,16 @@ use Osoobe\DimePay\Exceptions\DimePayException;
 class JwtSigner
 {
     private string $secretKey;
+
     private string $algorithm;
+
     private int $ttl;
 
     public function __construct(array $config = [])
     {
         $this->secretKey = $config['secret_key'] ?? '';
         $this->algorithm = $config['jwt']['algorithm'] ?? 'HS256';
-        $this->ttl       = $config['jwt']['ttl'] ?? 3600;
+        $this->ttl = $config['jwt']['ttl'] ?? 3600;
     }
 
     /**

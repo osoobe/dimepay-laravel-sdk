@@ -27,7 +27,7 @@ return [
     |
     */
     'client_key' => env('DIMEPAY_CLIENT_KEY'),
-    'secret_key'  => env('DIMEPAY_SECRET_KEY'),
+    'secret_key' => env('DIMEPAY_SECRET_KEY'),
 
     /*
     |--------------------------------------------------------------------------
@@ -40,7 +40,7 @@ return [
     */
     'base_urls' => [
         'production' => env('DIMEPAY_PRODUCTION_URL', 'https://api.dimepay.app/dapi/v1'),
-        'sandbox'    => env('DIMEPAY_SANDBOX_URL', 'https://sandbox.api.dimepay.app/dapi/v1'),
+        'sandbox' => env('DIMEPAY_SANDBOX_URL', 'https://sandbox.api.dimepay.app/dapi/v1'),
     ],
 
     /*
@@ -53,8 +53,8 @@ return [
     | retry_delay — milliseconds to wait between retries.
     |
     */
-    'timeout'     => (int) env('DIMEPAY_TIMEOUT', 30),
-    'retries'     => (int) env('DIMEPAY_RETRIES', 2),
+    'timeout' => (int) env('DIMEPAY_TIMEOUT', 30),
+    'retries' => (int) env('DIMEPAY_RETRIES', 2),
     'retry_delay' => (int) env('DIMEPAY_RETRY_DELAY', 500),
 
     /*
@@ -69,7 +69,7 @@ return [
     'logging' => [
         'enabled' => (bool) env('DIMEPAY_LOGGING', true),
         'channel' => env('DIMEPAY_LOG_CHANNEL', 'stack'),
-        'level'   => env('DIMEPAY_LOG_LEVEL', 'debug'),
+        'level' => env('DIMEPAY_LOG_LEVEL', 'debug'),
     ],
 
     /*
@@ -85,8 +85,8 @@ return [
     |
     */
     'routes' => [
-        'enabled'    => (bool) env('DIMEPAY_ROUTES_ENABLED', true),
-        'prefix'     => env('DIMEPAY_ROUTES_PREFIX', 'dimepay'),
+        'enabled' => (bool) env('DIMEPAY_ROUTES_ENABLED', true),
+        'prefix' => env('DIMEPAY_ROUTES_PREFIX', 'dimepay'),
         'middleware' => ['api'],
     ],
 
@@ -101,7 +101,7 @@ return [
     |
     */
     'webhook' => [
-        'secret'    => env('DIMEPAY_WEBHOOK_SECRET'),
+        'secret' => env('DIMEPAY_WEBHOOK_SECRET'),
         'tolerance' => (int) env('DIMEPAY_WEBHOOK_TOLERANCE', 300),
     ],
 
@@ -116,7 +116,7 @@ return [
     */
     'jwt' => [
         'algorithm' => env('DIMEPAY_JWT_ALGORITHM', 'HS256'),
-        'ttl'       => (int) env('DIMEPAY_JWT_TTL', 3600),
+        'ttl' => (int) env('DIMEPAY_JWT_TTL', 3600),
     ],
 
 ];

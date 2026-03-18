@@ -20,7 +20,7 @@ class CardService implements CardServiceInterface
     public function requestToken(CardRequestData $data): CardRequestResponseData
     {
         $response = $this->client->post('/card-request', $data->toArray());
-        $result   = CardRequestResponseData::from($response);
+        $result = CardRequestResponseData::from($response);
 
         event(new CardTokenRequested($data, $result));
 
@@ -29,7 +29,7 @@ class CardService implements CardServiceInterface
 
     public function find(string $cardRequestToken): CardData
     {
-        $response = $this->client->get('/cards/' . $cardRequestToken);
+        $response = $this->client->get('/cards/'.$cardRequestToken);
 
         return CardData::from($response);
     }

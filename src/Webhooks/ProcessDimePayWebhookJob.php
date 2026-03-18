@@ -12,7 +12,7 @@ class ProcessDimePayWebhookJob extends ProcessWebhookJob
     public function handle(): void
     {
         $payload = $this->webhookCall->payload;
-        $type    = $payload['type'] ?? 'unknown';
+        $type = $payload['type'] ?? 'unknown';
 
         event(new DimePayWebhookReceived($type, $payload));
     }

@@ -26,7 +26,7 @@ class PaymentService implements PaymentServiceInterface
     public function hostedPage(CreateOrderData $data): HostedPageResponseData
     {
         $response = $this->client->post('/payments/hosted-page', $data->toArray());
-        $result   = HostedPageResponseData::from($response);
+        $result = HostedPageResponseData::from($response);
 
         event(new HostedPaymentPageCreated($data, $result));
 
@@ -36,7 +36,7 @@ class PaymentService implements PaymentServiceInterface
     public function authorize(DirectPaymentData $data): PaymentResponseData
     {
         $response = $this->client->post('/payments/auth', $data->toArray());
-        $result   = PaymentResponseData::from($response);
+        $result = PaymentResponseData::from($response);
 
         event(new PaymentAuthorized($data, $result));
 
@@ -46,7 +46,7 @@ class PaymentService implements PaymentServiceInterface
     public function sale(DirectPaymentData $data): PaymentResponseData
     {
         $response = $this->client->post('/payments/sale', $data->toArray());
-        $result   = PaymentResponseData::from($response);
+        $result = PaymentResponseData::from($response);
 
         event(new PaymentSaleProcessed($data, $result));
 

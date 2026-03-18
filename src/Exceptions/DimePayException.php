@@ -9,7 +9,9 @@ use Exception;
 class DimePayException extends Exception
 {
     protected string $errorCode = '';
+
     protected array $details = [];
+
     protected int $status = 0;
 
     public static function fromResponse(int $status, string $errorCode, string $message, array $details = []): static
