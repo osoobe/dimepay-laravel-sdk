@@ -6,14 +6,11 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Http;
 use Osoobe\DimePay\Data\Orders\CreateOrderData;
 use Osoobe\DimePay\Data\Orders\CreateOrderResponseData;
-use Osoobe\DimePay\Data\Orders\OrderItemData;
 use Osoobe\DimePay\Data\Orders\OrderResponseData;
-use Osoobe\DimePay\Data\Shared\TaxData;
 use Osoobe\DimePay\Events\OrderCreated;
 use Osoobe\DimePay\Exceptions\DimePayAuthException;
 use Osoobe\DimePay\Exceptions\DimePayNotFoundException;
 use Osoobe\DimePay\Facades\DimePay;
-use Spatie\LaravelData\DataCollection;
 
 function makeOrderData(): CreateOrderData
 {
@@ -27,10 +24,10 @@ function makeOrderData(): CreateOrderData
         referenceTransactionId: 'REF-001',
         webhookUrl: 'https://example.com/webhook',
         redirectUrl: 'https://example.com/callback',
-        items: OrderItemData::collect([
+        items: [
             ['id' => 'item-1', 'name' => 'iMac', 'price' => 5000, 'quantity' => 1, 'sku' => 'IMAC-001'],
-        ], DataCollection::class),
-        taxes: TaxData::collect([], DataCollection::class),
+        ],
+        taxes: [],
     );
 }
 

@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Osoobe\DimePay\Data\Orders;
 
 use Osoobe\DimePay\Data\Shared\PersonData;
-use Osoobe\DimePay\Data\Shared\TaxData;
-use Spatie\LaravelData\Attributes\DataCollectionOf;
+use Spatie\LaravelData\Attributes\MapOutputName;
 use Spatie\LaravelData\Data;
-use Spatie\LaravelData\DataCollection;
 
 final class CreateOrderData extends Data
 {
@@ -27,19 +25,15 @@ final class CreateOrderData extends Data
         public float $discount = 0,
         public bool $fulfilled = false,
         public bool $tokenize = false,
+        #[MapOutputName('is_subscription')]
         public bool $isSubscription = false,
         public string $orderComments = '',
-        /** @var OrderItemData[]|DataCollection|null */
-        #[DataCollectionOf(OrderItemData::class)]
-        public DataCollection|array|null $items = null,
-        /** @var TaxData[]|DataCollection|null */
-        #[DataCollectionOf(TaxData::class)]
-        public DataCollection|array|null $taxes = null,
+        public array $items = [],
+        public array $taxes = [],
         public ?PersonData $shippingPerson = null,
         public ?PersonData $billingPerson = null,
-        /** @var SplitData[]|DataCollection|null */
-        #[DataCollectionOf(SplitData::class)]
-        public DataCollection|array|null $split = null,
+        public array $split = [],
+        #[MapOutputName('subscription_instructions')]
         public ?SubscriptionInstructionsData $subscriptionInstructions = null,
     ) {}
 }

@@ -26,6 +26,12 @@ function makeOrderDataForPayment(): CreateOrderData
         subtotal: 5000,
         currency: 'JMD',
         email: 'customer@example.com',
+        ipAddress: '127.0.0.1',
+        referenceTransactionId: 'REF-001',
+        items: [
+            ['id' => 'item-1', 'name' => 'Test', 'price' => 5000, 'quantity' => 1, 'sku' => 'TEST-001'],
+        ],
+        taxes: [],
     );
 }
 
@@ -37,32 +43,36 @@ function makeDirectPaymentData(): DirectPaymentData
         subtotal: 5000,
         currency: 'JMD',
         email: 'customer@example.com',
+        ipAddress: '127.0.0.1',
+        referenceTransactionId: 'REF-001',
         paymentParams: new PaymentParamsData(
             source: 'TOKEN',
             token: 'card_abc123',
         ),
+        items: [
+            ['id' => 'item-1', 'name' => 'Test', 'price' => 5000, 'quantity' => 1, 'sku' => 'TEST-001'],
+        ],
+        taxes: [],
     );
 }
 
 function paymentResponse(): array
 {
     return [
-        'id' => 'txn_abc123',
-        'amount' => 5000,
+        'id'          => 'txn_abc123',
+        'amount'      => 5000,
         'finalAmount' => 5000,
         'consumerFee' => 0,
-        'currency' => 'JMD',
-        'status' => 'COMPLETE',
-        'source' => 'CARD',
-        'refunded' => false,
-        'settled' => true,
+        'currency'    => 'JMD',
+        'status'      => 'COMPLETE',
+        'source'      => 'CARD',
+        'refunded'    => false,
+        'settled'     => true,
     ];
 }
 
 it('creates a hosted payment page and returns HostedPageResponseData', function () {
-    Http::fake([
-        '*/payments/hosted-page' => Http::response(['order_url' => 'https://pay.dimepay.app/test'], 201),
-    ]);
+    Http::fake(['*/payments/hosted-page' => Http::response(['order_url' => 'https://pay.dimepay.app/test'], 201)]);
 
     $response = DimePay::payments()->hostedPage(makeOrderDataForPayment());
 
@@ -167,7 +177,7 @@ it('fires PaymentRefunded event', function () {
 
 it('throws DimePayAuthException on 401', function () {
     Http::fake([
-        '*/payments/*' => Http::response(['code' => 'unauthorized', 'message' => 'Invalid key', 'details' => []], 401),
+        '*/payments/*' => Http::response(['statusCode' => 401, 'body' => ['message' => 'Unauthorized', 'response' => null]], 401),
     ]);
 
     expect(fn () => DimePay::payments()->hostedPage(makeOrderDataForPayment()))

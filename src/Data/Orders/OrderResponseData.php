@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Osoobe\DimePay\Data\Orders;
 
 use Osoobe\DimePay\Data\Shared\CustomerData;
+use Spatie\LaravelData\Attributes\MapInputName;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
+#[MapInputName(SnakeCaseMapper::class)]
 final class OrderResponseData extends Data
 {
     public function __construct(
@@ -25,6 +28,8 @@ final class OrderResponseData extends Data
         public ?array $fees = null,
         public float $shipping = 0,
         public float $tax = 0,
+        // API returns "taxValue" as camelCase — explicitly map it
+        #[MapInputName('taxValue')]
         public float $taxValue = 0,
         public float $consumerFee = 0,
         public bool $fulfilled = false,
