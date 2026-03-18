@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Osoobe\DimePay\Commands;
 
 use Illuminate\Console\Command;
+use Spatie\WebhookClient\WebhookClientServiceProvider;
 
 class InstallCommand extends Command
 {
@@ -25,18 +26,18 @@ class InstallCommand extends Command
         $this->line('  <fg=green;options=bold>✓</> Published <fg=cyan>config/dimepay.php</>');
 
         // Publish webhook-client config if available
-        if (class_exists(\Spatie\WebhookClient\WebhookClientServiceProvider::class)) {
+        if (class_exists(WebhookClientServiceProvider::class)) {
             $this->callSilently('vendor:publish', [
                 '--provider' => 'Spatie\WebhookClient\WebhookClientServiceProvider',
-                '--tag'      => 'webhook-client-config',
-                '--force'    => false,
+                '--tag' => 'webhook-client-config',
+                '--force' => false,
             ]);
             $this->line('  <fg=green;options=bold>✓</> Published <fg=cyan>config/webhook-client.php</>');
 
             $this->callSilently('vendor:publish', [
                 '--provider' => 'Spatie\WebhookClient\WebhookClientServiceProvider',
-                '--tag'      => 'webhook-client-migrations',
-                '--force'    => false,
+                '--tag' => 'webhook-client-migrations',
+                '--force' => false,
             ]);
             $this->line('  <fg=green;options=bold>✓</> Published webhook migrations');
         }

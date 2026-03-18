@@ -53,7 +53,7 @@ class DimePayServiceProvider extends PackageServiceProvider
         });
 
         $this->app->singletonIf(TransactionServiceInterface::class, function () {
-            return new TransactionService();
+            return new TransactionService;
         });
 
         $this->app->singleton(DimePayManager::class, function ($app) {
@@ -64,13 +64,13 @@ class DimePayServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         if (config('dimepay.routes.enabled', true)) {
-            $this->loadRoutesFrom(__DIR__ . '/../routes/dimepay.php');
+            $this->loadRoutesFrom(__DIR__.'/../routes/dimepay.php');
         }
 
         AboutCommand::add('DimePay SDK', fn () => [
-            'Version'     => '1.0.0',
+            'Version' => '1.0.0',
             'Environment' => config('dimepay.environment', 'sandbox'),
-            'Logging'     => config('dimepay.logging.enabled') ? 'enabled' : 'disabled',
+            'Logging' => config('dimepay.logging.enabled') ? 'enabled' : 'disabled',
         ]);
     }
 }
