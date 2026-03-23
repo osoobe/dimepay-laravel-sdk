@@ -24,5 +24,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `DimePayManager` with `withConfig()` for multi-tenant support
 - `DimePay` facade
 - `dimepay:install` Artisan command
-- Full test suite with Pest — 46 passing tests
+- Full test suite with Pest — 58 passing tests
 - GitHub Actions CI across PHP 8.2/8.3 and Laravel 10/11/12
