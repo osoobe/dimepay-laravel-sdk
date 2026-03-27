@@ -1,4 +1,4 @@
-name: Tests & Code Style
+name: Tests
 
 on:
   push:
@@ -7,34 +7,6 @@ on:
     branches: ["**"]
 
 jobs:
-  pint:
-    runs-on: ubuntu-latest
-    name: Code Style (Pint)
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref || github.ref_name }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.3"
-          coverage: none
-
-      - name: Install dependencies
-        run: composer update --prefer-dist --no-interaction --no-progress
-
-      - name: Run Pint
-        run: vendor/bin/pint
-
-      - name: Commit fixes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "style: apply Pint fixes"
-
   test:
     runs-on: ubuntu-latest
     strategy:
