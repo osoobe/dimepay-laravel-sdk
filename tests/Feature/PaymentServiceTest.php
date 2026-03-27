@@ -59,15 +59,15 @@ function makeDirectPaymentData(): DirectPaymentData
 function paymentResponse(): array
 {
     return [
-        'id'          => 'txn_abc123',
-        'amount'      => 5000,
+        'id' => 'txn_abc123',
+        'amount' => 5000,
         'finalAmount' => 5000,
         'consumerFee' => 0,
-        'currency'    => 'JMD',
-        'status'      => 'COMPLETE',
-        'source'      => 'CARD',
-        'refunded'    => false,
-        'settled'     => true,
+        'currency' => 'JMD',
+        'status' => 'COMPLETE',
+        'source' => 'CARD',
+        'refunded' => false,
+        'settled' => true,
     ];
 }
 

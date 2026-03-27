@@ -31,6 +31,7 @@ it('wraps post payload as signed jwt with lang and data fields', function () {
 
     Http::assertSent(function ($request) {
         $body = $request->data();
+
         return isset($body['lang']) && isset($body['data']);
     });
 });
@@ -53,7 +54,7 @@ it('resolves production base url when environment is production', function () {
 
     Http::assertSent(function ($request) {
         return str_contains($request->url(), 'api.dimepay.app')
-            && ! str_contains($request->url(), 'sandbox');
+            && !str_contains($request->url(), 'sandbox');
     });
 });
 

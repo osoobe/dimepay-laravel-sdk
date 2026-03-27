@@ -14,28 +14,28 @@ use Osoobe\DimePay\Facades\DimePay;
 function makeRecurringOrderData(array $overrides = []): CreateOrderData
 {
     return CreateOrderData::from(array_merge([
-        'id'                      => 'SUB-001',
-        'total'                   => 4900,
-        'subtotal'                => 4900,
-        'currency'                => 'USD',
-        'email'                   => 'subscriber@example.com',
-        'ipAddress'               => '127.0.0.1',
-        'referenceTransactionId'  => 'REF-SUB-001',
-        'isSubscription'          => true,
-        'tokenize'                => true,
+        'id' => 'SUB-001',
+        'total' => 4900,
+        'subtotal' => 4900,
+        'currency' => 'USD',
+        'email' => 'subscriber@example.com',
+        'ipAddress' => '127.0.0.1',
+        'referenceTransactionId' => 'REF-SUB-001',
+        'isSubscription' => true,
+        'tokenize' => true,
         'subscriptionInstructions' => [
             'recurringFrequency' => 'MONTHLY',
-            'billingCycles'      => 12,
+            'billingCycles' => 12,
         ],
         'items' => [
             [
-                'id'               => 'PLAN-BASIC',
-                'name'             => 'Basic Plan – Monthly',
-                'price'            => 4900,
-                'quantity'         => 1,
-                'sku'              => 'PLAN-BASIC',
+                'id' => 'PLAN-BASIC',
+                'name' => 'Basic Plan – Monthly',
+                'price' => 4900,
+                'quantity' => 1,
+                'sku' => 'PLAN-BASIC',
                 'shortDescription' => 'Monthly subscription',
-                'imageUrl'         => 'https://example.com/plan.jpg',
+                'imageUrl' => 'https://example.com/plan.jpg',
             ],
         ],
         'taxes' => [],
@@ -61,7 +61,7 @@ it('creates a weekly recurring subscription order', function () {
     $response = DimePay::orders()->create(makeRecurringOrderData([
         'subscriptionInstructions' => [
             'recurringFrequency' => 'WEEKLY',
-            'billingCycles'      => 52,
+            'billingCycles' => 52,
         ],
     ]));
 
@@ -77,7 +77,7 @@ it('creates a yearly recurring subscription order', function () {
     $response = DimePay::orders()->create(makeRecurringOrderData([
         'subscriptionInstructions' => [
             'recurringFrequency' => 'YEARLY',
-            'billingCycles'      => 3,
+            'billingCycles' => 3,
         ],
     ]));
 
@@ -120,13 +120,13 @@ it('creates a subscription with SubscriptionInstructionsData object', function (
         ),
         items: [
             [
-                'id'               => 'PLAN-PREMIUM',
-                'name'             => 'Premium Plan',
-                'price'            => 9900,
-                'quantity'         => 1,
-                'sku'              => 'PLAN-PREMIUM',
+                'id' => 'PLAN-PREMIUM',
+                'name' => 'Premium Plan',
+                'price' => 9900,
+                'quantity' => 1,
+                'sku' => 'PLAN-PREMIUM',
                 'shortDescription' => 'Premium monthly plan',
-                'imageUrl'         => 'https://example.com/plan.jpg',
+                'imageUrl' => 'https://example.com/plan.jpg',
             ],
         ],
         taxes: [],
@@ -153,8 +153,8 @@ it('throws DimePayValidationException for invalid recurring frequency', function
     Http::fake([
         '*/orders' => Http::response([
             'statusCode' => 400,
-            'body'       => [
-                'message'  => ['Invalid recurring frequency'],
+            'body' => [
+                'message' => ['Invalid recurring frequency'],
                 'response' => null,
             ],
         ], 400),
@@ -163,7 +163,7 @@ it('throws DimePayValidationException for invalid recurring frequency', function
     expect(fn () => DimePay::orders()->create(makeRecurringOrderData([
         'subscriptionInstructions' => [
             'recurringFrequency' => 'INVALID_FREQUENCY',
-            'billingCycles'      => 12,
+            'billingCycles' => 12,
         ],
     ])))->toThrow(DimePayValidationException::class);
 });

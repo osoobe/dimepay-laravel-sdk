@@ -57,11 +57,11 @@ it('fires OrderCreated event on successful create', function () {
 it('finds an order by token and returns OrderResponseData', function () {
     Http::fake([
         '*/orders/*' => Http::response([
-            'id'       => 'ORDER-001',
-            'token'    => 'order_abc123',
-            'status'   => 'COMPLETE',
+            'id' => 'ORDER-001',
+            'token' => 'order_abc123',
+            'status' => 'COMPLETE',
             'currency' => 'JMD',
-            'total'    => 5000,
+            'total' => 5000,
             'subtotal' => 5000,
         ], 200),
     ]);

@@ -7,44 +7,45 @@ use Illuminate\Support\Facades\Http;
 use Osoobe\DimePay\Data\Orders\CreateOrderData;
 use Osoobe\DimePay\Data\Orders\CreateOrderResponseData;
 use Osoobe\DimePay\Events\OrderCreated;
+use Osoobe\DimePay\Exceptions\DimePayValidationException;
 use Osoobe\DimePay\Facades\DimePay;
 
 function makeBridgeOrderData(array $overrides = []): CreateOrderData
 {
     return CreateOrderData::from(array_merge([
-        'id'                     => 'BRIDGE-001',
-        'total'                  => 2000,
-        'subtotal'               => 2000,
-        'currency'               => 'USD',
-        'email'                  => 'buyer@example.com',
-        'ipAddress'              => '127.0.0.1',
+        'id' => 'BRIDGE-001',
+        'total' => 2000,
+        'subtotal' => 2000,
+        'currency' => 'USD',
+        'email' => 'buyer@example.com',
+        'ipAddress' => '127.0.0.1',
         'referenceTransactionId' => 'REF-BRIDGE-001',
-        'items'                  => [
+        'items' => [
             [
-                'id'               => 'SKU-BOOK-1',
-                'name'             => 'Hardcover Book',
-                'price'            => 500,
-                'quantity'         => 1,
-                'sku'              => 'BOOK-001',
+                'id' => 'SKU-BOOK-1',
+                'name' => 'Hardcover Book',
+                'price' => 500,
+                'quantity' => 1,
+                'sku' => 'BOOK-001',
                 'shortDescription' => 'A book',
-                'imageUrl'         => 'https://example.com/book.jpg',
-                'merchantId'       => 'm4D8mQ1wMrdTUIg',
+                'imageUrl' => 'https://example.com/book.jpg',
+                'merchantId' => 'm4D8mQ1wMrdTUIg',
             ],
             [
-                'id'               => 'SKU-COURSE-1',
-                'name'             => 'Online Course',
-                'price'            => 1500,
-                'quantity'         => 1,
-                'sku'              => 'COURSE-001',
+                'id' => 'SKU-COURSE-1',
+                'name' => 'Online Course',
+                'price' => 1500,
+                'quantity' => 1,
+                'sku' => 'COURSE-001',
                 'shortDescription' => 'A course',
-                'imageUrl'         => 'https://example.com/course.jpg',
-                'merchantId'       => 'm7UarSiV9zWxN6v',
+                'imageUrl' => 'https://example.com/course.jpg',
+                'merchantId' => 'm7UarSiV9zWxN6v',
             ],
         ],
         'split' => [
             ['merchantId' => 'm4D8mQ1wMrdTUIg', 'amount' => 500, 'fee' => 10],
             ['merchantId' => 'm7UarSiV9zWxN6v', 'amount' => 1500, 'fee' => 30],
-            ],
+        ],
         'taxes' => [],
     ], $overrides));
 }
@@ -62,6 +63,7 @@ it('creates a split order with correct merchant_id snake_case in payload', funct
     // Verify the JWT payload sent to the API contains merchant_id snake_case
     Http::assertSent(function ($request) {
         $body = $request->data();
+
         // body has lang and data (JWT) — we just confirm the request was made
         return isset($body['lang']) && isset($body['data']);
     });
@@ -85,18 +87,18 @@ it('creates a single merchant bridge order', function () {
     ]);
 
     $response = DimePay::orders()->create(makeBridgeOrderData([
-        'total'    => 500,
+        'total' => 500,
         'subtotal' => 500,
-        'items'    => [
+        'items' => [
             [
-                'id'               => 'SKU-BOOK-1',
-                'name'             => 'Hardcover Book',
-                'price'            => 500,
-                'quantity'         => 1,
-                'sku'              => 'BOOK-001',
+                'id' => 'SKU-BOOK-1',
+                'name' => 'Hardcover Book',
+                'price' => 500,
+                'quantity' => 1,
+                'sku' => 'BOOK-001',
                 'shortDescription' => 'A book',
-                'imageUrl'         => 'https://example.com/book.jpg',
-                'merchantId'       => 'm4D8mQ1wMrdTUIg',
+                'imageUrl' => 'https://example.com/book.jpg',
+                'merchantId' => 'm4D8mQ1wMrdTUIg',
             ],
         ],
         'split' => [
@@ -114,38 +116,38 @@ it('creates a bridge order with multiple items per merchant', function () {
     ]);
 
     $response = DimePay::orders()->create(makeBridgeOrderData([
-        'total'    => 3000,
+        'total' => 3000,
         'subtotal' => 3000,
-        'items'    => [
+        'items' => [
             [
-                'id'               => 'item-1',
-                'name'             => 'Book A',
-                'price'            => 300,
-                'quantity'         => 1,
-                'sku'              => 'BOOK-A',
+                'id' => 'item-1',
+                'name' => 'Book A',
+                'price' => 300,
+                'quantity' => 1,
+                'sku' => 'BOOK-A',
                 'shortDescription' => '',
-                'imageUrl'         => 'https://example.com/img.jpg',
-                'merchantId'       => 'm4D8mQ1wMrdTUIg',
+                'imageUrl' => 'https://example.com/img.jpg',
+                'merchantId' => 'm4D8mQ1wMrdTUIg',
             ],
             [
-                'id'               => 'item-2',
-                'name'             => 'Book B',
-                'price'            => 200,
-                'quantity'         => 1,
-                'sku'              => 'BOOK-B',
+                'id' => 'item-2',
+                'name' => 'Book B',
+                'price' => 200,
+                'quantity' => 1,
+                'sku' => 'BOOK-B',
                 'shortDescription' => '',
-                'imageUrl'         => 'https://example.com/img.jpg',
-                'merchantId'       => 'm4D8mQ1wMrdTUIg',
+                'imageUrl' => 'https://example.com/img.jpg',
+                'merchantId' => 'm4D8mQ1wMrdTUIg',
             ],
             [
-                'id'               => 'item-3',
-                'name'             => 'Course',
-                'price'            => 2500,
-                'quantity'         => 1,
-                'sku'              => 'COURSE-A',
+                'id' => 'item-3',
+                'name' => 'Course',
+                'price' => 2500,
+                'quantity' => 1,
+                'sku' => 'COURSE-A',
                 'shortDescription' => '',
-                'imageUrl'         => 'https://example.com/img.jpg',
-                'merchantId'       => 'm7UarSiV9zWxN6v',
+                'imageUrl' => 'https://example.com/img.jpg',
+                'merchantId' => 'm7UarSiV9zWxN6v',
             ],
         ],
         'split' => [
@@ -162,8 +164,8 @@ it('throws DimePayValidationException on mismatched split amounts', function () 
     Http::fake([
         '*/orders' => Http::response([
             'statusCode' => 400,
-            'body'       => [
-                'message'  => ['Split amounts do not match item totals'],
+            'body' => [
+                'message' => ['Split amounts do not match item totals'],
                 'response' => null,
             ],
         ], 400),
@@ -174,5 +176,5 @@ it('throws DimePayValidationException on mismatched split amounts', function () 
             ['merchantId' => 'm4D8mQ1wMrdTUIg', 'amount' => 999, 'fee' => 10], // wrong amount
             ['merchantId' => 'm7UarSiV9zWxN6v', 'amount' => 999, 'fee' => 30], // wrong amount
         ],
-    ])))->toThrow(\Osoobe\DimePay\Exceptions\DimePayValidationException::class);
+    ])))->toThrow(DimePayValidationException::class);
 });

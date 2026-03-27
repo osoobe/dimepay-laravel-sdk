@@ -61,15 +61,15 @@ it('can fake order creation using Http::fake', function () {
 it('can fake a sale payment using Http::fake', function () {
     Http::fake([
         '*/payments/sale' => Http::response([
-            'id'          => 'txn_fake123',
-            'amount'      => 5000,
+            'id' => 'txn_fake123',
+            'amount' => 5000,
             'finalAmount' => 5000,
             'consumerFee' => 0,
-            'currency'    => 'JMD',
-            'status'      => 'COMPLETE',
-            'source'      => 'CARD',
-            'refunded'    => false,
-            'settled'     => true,
+            'currency' => 'JMD',
+            'status' => 'COMPLETE',
+            'source' => 'CARD',
+            'refunded' => false,
+            'settled' => true,
         ], 200),
     ]);
 
