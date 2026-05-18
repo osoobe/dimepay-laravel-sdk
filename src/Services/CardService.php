@@ -31,6 +31,6 @@ class CardService implements CardServiceInterface
     {
         $response = $this->client->get('/cards/'.$cardRequestToken);
 
-        return CardData::from($response);
+        return CardData::from($response['card'] ?? $response);
     }
 }
