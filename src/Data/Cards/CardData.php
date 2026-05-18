@@ -12,11 +12,11 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 final class CardData extends Data
 {
     public function __construct(
-        public string $token,
-        public string $cardRequestToken,
-        public string $referenceId,
-        public string $status,
-        public bool $expired,
+        public ?string $token = null,
+        public ?string $cardRequestToken = null,
+        public ?string $referenceId = null,
+        public ?string $status = null,
+        public ?bool $expired = null,
         public ?string $currency = null,
         public ?string $cardExpiry = null,
         public ?string $cardScheme = null,

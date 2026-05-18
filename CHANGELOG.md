@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- CardData now accepts partial responses from GET /cards/{cardRequestToken} — five identity/state fields made nullable.
+
 ## [1.0.0] - 2025-03-17
 
 ### Added
