@@ -9,8 +9,8 @@ use Spatie\LaravelData\Data;
 final class SelectedOptionData extends Data
 {
     public function __construct(
-        public string $name,
-        public string $value,
-        public string $type,
+        public ?string $name,
+        public ?string $value,
+        public ?string $type,
     ) {}
 }

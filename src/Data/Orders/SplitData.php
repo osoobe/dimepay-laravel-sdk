@@ -11,8 +11,8 @@ final class SplitData extends Data
 {
     public function __construct(
         #[MapOutputName('merchant_id')]
-        public string $merchantId,
-        public int $amount,
-        public int $fee,
+        public ?string $merchantId,
+        public ?int $amount,
+        public ?int $fee,
     ) {}
 }
