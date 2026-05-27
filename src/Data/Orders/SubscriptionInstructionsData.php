@@ -11,8 +11,8 @@ final class SubscriptionInstructionsData extends Data
 {
     public function __construct(
         #[MapOutputName('recurring_frequency')]
-        public string $recurringFrequency,
+        public ?string $recurringFrequency,
         #[MapOutputName('billing_cycles')]
-        public int $billingCycles,
+        public ?int $billingCycles,
     ) {}
 }

@@ -12,6 +12,6 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 final class HostedPageResponseData extends Data
 {
     public function __construct(
-        public string $orderUrl,
+        public ?string $orderUrl,
     ) {}
 }

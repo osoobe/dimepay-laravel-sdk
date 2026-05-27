@@ -9,7 +9,7 @@ use Spatie\LaravelData\Data;
 final class CustomerData extends Data
 {
     public function __construct(
-        public string $name,
+        public ?string $name,
         public ?string $email = null,
         public ?string $phone = null,
     ) {}

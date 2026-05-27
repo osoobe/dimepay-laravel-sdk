@@ -9,6 +9,6 @@ use Spatie\LaravelData\Data;
 final class TransactionInputData extends Data
 {
     public function __construct(
-        public string $transactionId,
+        public ?string $transactionId,
     ) {}
 }

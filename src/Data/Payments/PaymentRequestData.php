@@ -9,7 +9,7 @@ use Spatie\LaravelData\Data;
 final class PaymentRequestData extends Data
 {
     public function __construct(
-        public string $token,
+        public ?string $token,
         public bool $isSubscription = false,
     ) {}
 }

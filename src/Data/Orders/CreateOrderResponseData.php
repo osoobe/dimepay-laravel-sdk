@@ -12,6 +12,6 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 final class CreateOrderResponseData extends Data
 {
     public function __construct(
-        public string $orderUrl,
+        public ?string $orderUrl,
     ) {}
 }

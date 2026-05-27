@@ -13,12 +13,12 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 final class OrderResponseData extends Data
 {
     public function __construct(
-        public string $id,
-        public string $token,
-        public string $status,
-        public string $currency,
-        public float $total,
-        public float $subtotal,
+        public ?string $id,
+        public ?string $token,
+        public ?string $status,
+        public ?string $currency,
+        public ?float $total,
+        public ?float $subtotal,
         public ?CustomerData $customer = null,
         public ?string $customerId = null,
         public ?string $originType = null,

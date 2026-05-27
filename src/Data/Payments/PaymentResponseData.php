@@ -13,13 +13,13 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 final class PaymentResponseData extends Data
 {
     public function __construct(
-        public string $id,
-        public float $amount,
-        public float $finalAmount,
-        public float $consumerFee,
-        public string $currency,
-        public string $status,
-        public string $source,
+        public ?string $id,
+        public ?float $amount,
+        public ?float $finalAmount,
+        public ?float $consumerFee,
+        public ?string $currency,
+        public ?string $status,
+        public ?string $source,
         public ?string $description = null,
         public ?string $sourceAccount = null,
         public ?string $externalTransactionId = null,

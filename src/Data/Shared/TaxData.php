@@ -9,8 +9,8 @@ use Spatie\LaravelData\Data;
 final class TaxData extends Data
 {
     public function __construct(
-        public string $name,
-        public float $value,
-        public float $total,
+        public ?string $name,
+        public ?float $value,
+        public ?float $total,
     ) {}
 }
