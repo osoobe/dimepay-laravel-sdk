@@ -11,13 +11,13 @@ use Spatie\LaravelData\Data;
 final class CreateOrderData extends Data
 {
     public function __construct(
-        public ?string $id,
-        public ?float $total,
-        public ?float $subtotal,
-        public ?string $currency,
-        public ?string $email,
-        public ?string $ipAddress,
-        public ?string $referenceTransactionId,
+        public string $id,
+        public float $total,
+        public float $subtotal,
+        public string $currency,
+        public string $email,
+        public string $ipAddress,
+        public string $referenceTransactionId,
         public ?string $webhookUrl = null,
         public ?string $redirectUrl = null,
         public ?string $checkoutUrl = null,
