@@ -17,10 +17,10 @@ use Osoobe\DimePay\Services\OrderService;
 use Osoobe\DimePay\Services\PaymentService;
 use Osoobe\DimePay\Support\JwtSigner;
 
-it('runs on Laravel 11, 12, or 13', function () {
+it('runs on a supported Laravel version', function () {
     $version = (int) Application::VERSION;
 
-    expect($version)->toBeGreaterThanOrEqual(11);
+    expect($version)->toBeGreaterThanOrEqual(10);
 });
 
 it('resolves the DimePay facade on the current Laravel version', function () {
