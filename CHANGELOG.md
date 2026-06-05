@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Laravel 13 support — tested against PHP 8.3 and 8.4
+- `LaravelCompatibilityTest` suite — verifies facade resolution, config binding, order creation, event dispatch, and HTTP faking across all supported Laravel versions (10–13)
+- PHP 8.4 added to CI matrix
+
+### Changed
+- CI matrix expanded: PHP 8.3 × Laravel 13, PHP 8.4 × Laravel 13
+- `orchestra/testbench` dev requirement widened to `^9.0|^10.0|^11.0`
+- `pestphp/pest` and `pestphp/pest-plugin-laravel` dev requirements widened to `^3.0|^4.0` (Pest 4 is required for Laravel 13 jobs)
+- CI `fail-fast` set to `false` — all matrix jobs now run to completion independently
+
 ### Fixed
 - CardData now accepts partial responses from GET /cards/{cardRequestToken} — five identity/state fields made nullable.
 
