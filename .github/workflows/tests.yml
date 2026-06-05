@@ -10,7 +10,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         include:
           - php: "8.2"
@@ -48,6 +48,20 @@ jobs:
             pest_plugin: "^3.0"
             larastan: "^3.0"
             collision: "^8.0"
+          - php: "8.3"
+            laravel: "13.*"
+            testbench: "^11.0"
+            pest: "^4.0"
+            pest_plugin: "^4.0"
+            larastan: "^3.0"
+            collision: "^8.0"
+          - php: "8.4"
+            laravel: "13.*"
+            testbench: "^11.0"
+            pest: "^4.0"
+            pest_plugin: "^4.0"
+            larastan: "^3.0"
+            collision: "^8.0"
 
     name: PHP ${{ matrix.php }} — Laravel ${{ matrix.laravel }}
 
@@ -75,4 +89,4 @@ jobs:
           composer update --prefer-dist --no-interaction --no-progress
 
       - name: Run tests
-        run: vendor/bin/pest --ci
+        run: vendor/bin/pest --ci --no-coverage
