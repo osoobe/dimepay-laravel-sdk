@@ -3,7 +3,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/osoobe/dimepay-laravel-sdk.svg?style=flat-square)](https://packagist.org/packages/osoobe/dimepay-laravel-sdk)
 [![Tests](https://img.shields.io/github/actions/workflow/status/osoobe/dimepay-laravel-sdk/tests.yml?label=tests&style=flat-square)](https://github.com/osoobe/dimepay-laravel-sdk/actions)
 [![PHP Version](https://img.shields.io/badge/php-%5E8.2-blue.svg?style=flat-square)](https://www.php.net/)
-[![Laravel](https://img.shields.io/badge/laravel-10%20%7C%2011%20%7C%2012-red.svg?style=flat-square)](https://laravel.com)
+[![Laravel](https://img.shields.io/badge/laravel-10%20%7C%2011%20%7C%2012%20%7C%2013-red.svg?style=flat-square)](https://laravel.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE.md)
 
 A first-class Laravel SDK for the [DimePay](https://docs.dimepay.net) payment gateway. Handles everything — orders, hosted payments, card tokenization, auth/capture/void/refund, split payments (Dime Bridge), recurring subscriptions, webhooks, JWT signing, and full white-label extensibility.
